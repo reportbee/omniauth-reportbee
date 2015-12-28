@@ -22,7 +22,8 @@ module OmniauthAdmin
       info do
         {
             :name => raw_info['name'],
-            :email => raw_info['email']
+            :email => raw_info['email'],
+            :is_admin => raw_info['is_admin_user']
         }
       end
 
