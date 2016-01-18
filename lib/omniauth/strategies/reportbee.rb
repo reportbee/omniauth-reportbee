@@ -9,7 +9,7 @@ module OmniauthAdmin
       # initializing your consumer from the OAuth gem.
       option :client_options, {
                                 :site => ENV['OAUTH_APP_URL'],
-                                :authorize_url => 'http://auth.lvh.me:3000/oauth/authorize'
+                                :authorize_url => '/oauth/authorize'
                             }
 
       # These are called after authentication has succeeded. If
