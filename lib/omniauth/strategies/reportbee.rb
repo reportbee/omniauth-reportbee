@@ -1,5 +1,5 @@
 require 'omniauth-oauth2'
-module OmniauthAdmin
+module OmniAuth
   module Strategies
     class Reportbee < OmniAuth::Strategies::OAuth2
       # change the class name and the :name option to match your application name
