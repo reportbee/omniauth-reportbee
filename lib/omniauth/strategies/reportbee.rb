@@ -9,7 +9,7 @@ module OmniAuth
       # initializing your consumer from the OAuth gem.
       option :client_options, {
                                 :site => ENV['OAUTH_APP_URL'],
-                                :authorize_url => 'http://auth.lvh.me:3000/oauth/authorize'
+                                :authorize_url => '/oauth/authorize'
                             }
 
       # These are called after authentication has succeeded. If
@@ -28,7 +28,14 @@ module OmniAuth
 
       extra do
         {
-            :is_admin => raw_info['is_admin_user']
+            :is_admin => raw_info['is_admin_user'],
+            :sign_in_count => raw_info['sign_in_count'],
+            :last_sign_in_at => raw_info['last_sign_in_at'],
+            :small_profile_picture_url => raw_info['small_profile_picture_url'],
+            :medium_profile_picture_url => raw_info['medium_profile_picture_url'],
+            :is_email_verified => raw_info['is_email_verified'],
+            :is_mobile_verified => raw_info['is_mobile_verified'],
+            :is_current_user_profile_present => raw_info['is_current_user_profile_present']
         }
       end
 
