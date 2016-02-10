@@ -9,7 +9,7 @@ module OmniAuth
       # initializing your consumer from the OAuth gem.
       option :client_options, {
                                 :site => ENV['OAUTH_APP_URL'],
-                                :authorize_url => '/oauth/authorize'
+                                :authorize_url => "#{ENV['OAUTH_APP_URL']}/oauth/authorize"
                             }
 
       # These are called after authentication has succeeded. If
