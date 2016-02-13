@@ -1,1 +1,2 @@
-require 'omniauth/reportbee'
+require "omniauth-reportbee/version"
+require 'omniauth/strategies/reportbee'

@@ -1,5 +1,5 @@
 require 'omniauth-oauth2'
-module OmniauthAdmin
+module OmniAuth
   module Strategies
     class Reportbee < OmniAuth::Strategies::OAuth2
       # change the class name and the :name option to match your application name
@@ -28,7 +28,14 @@ module OmniauthAdmin
 
       extra do
         {
-            :is_admin => raw_info['is_admin_user']
+            :is_admin => raw_info['is_admin_user'],
+            :sign_in_count => raw_info['sign_in_count'],
+            :last_sign_in_at => raw_info['last_sign_in_at'],
+            :small_profile_picture_url => raw_info['small_profile_picture_url'],
+            :medium_profile_picture_url => raw_info['medium_profile_picture_url'],
+            :is_email_verified => raw_info['is_email_verified'],
+            :is_mobile_verified => raw_info['is_mobile_verified'],
+            :is_current_user_profile_present => raw_info['is_current_user_profile_present']
         }
       end
 
