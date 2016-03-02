@@ -35,7 +35,8 @@ module OmniAuth
             :medium_profile_picture_url => raw_info['medium_profile_picture_url'],
             :is_email_verified => raw_info['is_email_verified'],
             :is_mobile_verified => raw_info['is_mobile_verified'],
-            :is_current_user_profile_present => raw_info['is_current_user_profile_present']
+            :is_current_user_profile_present => raw_info['is_current_user_profile_present'],
+            :mobile => raw_info['mobile']
         }
       end
 
