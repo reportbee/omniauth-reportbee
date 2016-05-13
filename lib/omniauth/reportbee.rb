@@ -13,13 +13,15 @@ module OmniAuth
       options = { body: source_params, headers: header_hash }
 
       # do api call
-      response_hash = post_request ? access_token_object.post( url_string, options ) : access_token_object.get( url_string, options )
+      api_response_hash = post_request ? access_token_object.post( url_string, options ) : access_token_object.get( url_string, options )
+      response_hash = { response_hash: api_response_hash.parsed, access_token_string: access_token_string }
 
-      [ response_hash.parsed, access_token_string ]
+      response_hash
     rescue => e
-      response_hash = false_response_hash("Something went wrong while doing api calls! #{e.message}")
+      api_response_hash = false_response_hash("Something went wrong while doing api calls! #{e.message}")
+      response_hash = { response_hash: api_response_hash, access_token_string: access_token_string }
 
-      [ response_hash, access_token_string ]
+      response_hash
     end
 
     def self.get_client_credentials_access_token
