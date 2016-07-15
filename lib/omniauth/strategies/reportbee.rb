@@ -22,21 +22,21 @@ module OmniAuth
       info do
         {
             :name => raw_info['name'],
-            :email => raw_info['email']
+            :email => raw_info['email'],
+            :mobile => raw_info['mobile'],
+            :gender => raw_info['gender']
         }
       end
 
       extra do
         {
             :is_admin => raw_info['is_admin_user'],
-            :sign_in_count => raw_info['sign_in_count'],
-            :last_sign_in_at => raw_info['last_sign_in_at'],
             :small_profile_picture_url => raw_info['small_profile_picture_url'],
             :medium_profile_picture_url => raw_info['medium_profile_picture_url'],
+            :digital_signature_url => raw_info['digital_signature_url'],
             :is_email_verified => raw_info['is_email_verified'],
             :is_mobile_verified => raw_info['is_mobile_verified'],
-            :is_current_user_profile_present => raw_info['is_current_user_profile_present'],
-            :mobile => raw_info['mobile']
+            :date_of_birth => raw_info['date_of_birth']
         }
       end
 
