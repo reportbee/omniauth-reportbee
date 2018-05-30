@@ -74,7 +74,7 @@ module OmniAuth
         uri = URI.parse( api_url )
 
         http = Net::HTTP.new( uri.host, uri.port )
-        http.read_timeout = 1800
+        http.read_timeout = 3600
 
         if 'https' == APP_CONFIG[:protocol] || api_url_string.include?( 'https' )
           http.use_ssl = true
