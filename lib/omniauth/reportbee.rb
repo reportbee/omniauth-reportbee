@@ -25,7 +25,7 @@ module OmniAuth
 
         # do api call
         Rails.logger.info "99999999999999999999999999999999999999999999999999999999999999999"
-        Rails.logger.info "access_token_object = #{access_token_object.attributes}"
+        Rails.logger.info "access_token_object = #{access_token_object.inspect}"
         Rails.logger.info "url_string = #{url_string}"
         Rails.logger.info "options = #{options}"
         Rails.logger.info "is_post_request = #{is_post_request}"
