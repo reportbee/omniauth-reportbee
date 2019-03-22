@@ -24,10 +24,21 @@ module OmniAuth
         options = { body: source_params, headers: header_hash }
 
         # do api call
+        Rails.logger.info "99999999999999999999999999999999999999999999999999999999999999999"
+        Rails.logger.info "access_token_object = #{access_token_object.attributes}"
+        Rails.logger.info "url_string = #{url_string}"
+        Rails.logger.info "options = #{options}"
+        Rails.logger.info "is_post_request = #{is_post_request}"
+        Rails.logger.info "99999999999999999999999999999999999999999999999999999999999999999"
+
         api_response_hash = is_post_request ? access_token_object.post( url_string, options ) : access_token_object.get( url_string, options )
         api_response_hash.parsed
       rescue ::OAuth2::Error => e
         error_message = "OAuth2 Error while Making ESF API call from omniauth-rb gem. API URL: #{api_url_string}. Error message: #{e.message}. Error code: innutritious."
+
+        Rails.logger.info("error_message = #{error_message}")
+        Rails.logger.info(e.message)
+        Rails.logger.info(e.backtrace)
 
         if defined?( Rails ) && Rails.env.development?
           puts '===================== Exception occurred ====================='
