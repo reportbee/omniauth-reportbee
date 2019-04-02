@@ -9,6 +9,8 @@ module OmniAuth
   class Reportbee
     class << self
       def do_esf_api_call( args )
+        Rails.logger.info("================ do_esf_api_call() =============")
+
         api_response_hash = {}
         api_url_string = args[:api_url_string]
         access_token_object = args[:access_token_object]
@@ -24,7 +26,20 @@ module OmniAuth
         options = { body: source_params, headers: header_hash }
 
         # do api call
-        api_response_hash = is_post_request ? access_token_object.post( url_string, options ) : access_token_object.get( url_string, options )
+        if is_post_request
+          Rails.logger.info("================ Making POST request =============")
+          api_response_hash = access_token_object.post( url_string, options )
+        else
+          Rails.logger.info("================ Making GET request =============")
+          url_with_query_string = "#{url_string}?"
+
+          # body is not allowed for GET request in GCP HTTPs load balancer
+          body = options.delete(:body)
+          body.each { |key, value| url_with_query_string += "#{key}=#{value}&" }
+
+          api_response_hash = access_token_object.get( url_with_query_string, options )
+        end
+
         api_response_hash.parsed
       rescue ::OAuth2::Error => e
         error_message = "OAuth2 Error while Making ESF API call from omniauth-rb gem. API URL: #{api_url_string}. Error message: #{e.message}. Error code: innutritious."
@@ -60,6 +75,8 @@ module OmniAuth
       end
 
       def do_app2app_api_call( args )
+        Rails.logger.info("================ do_app2app_api_call() =============")
+
         response = {}
         api_url_string = args[:api_url_string]
         access_token_object = args[:access_token_object]
@@ -81,8 +98,22 @@ module OmniAuth
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
 
-        request = is_post_request ? Net::HTTP::Post.new(uri.request_uri) : Net::HTTP::Get.new( uri.request_uri )
-        request.set_form_data( source_params )
+        if is_post_request
+          Rails.logger.info("================ Making POST request =============")
+          request = Net::HTTP::Post.new(uri.request_uri)
+
+          request.set_form_data( source_params )
+        else
+          Rails.logger.info("================ Making GET request =============")
+          url_with_query_string = "#{uri.request_uri}?"
+
+          # body is not allowed for GET request in GCP HTTPs load balancer
+          source_params.each { |key, value| url_with_query_string += "#{key}=#{value}&" }
+          Rails.logger.info("url_with_query_string = #{url_with_query_string}")
+
+          request = Net::HTTP::Get.new( url_with_query_string )
+        end
+
         request['Accept'] = 'reportbee/esf.version.v2'
         # If debugging of requests are required, then enable the following line.
         # http.set_debug_output($stdout) if Rails.env.development?
